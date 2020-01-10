@@ -4,6 +4,7 @@ from tkinter import *
 from collections import deque
 import pygame
 
+
 G = 6.67408*10**-11
 run = True
 t = 0.3
@@ -16,14 +17,17 @@ DIV = 1
 m = True 
 TrDepth = 600
 BLACK = (0, 0, 0)
-k = 4
+k = 0
 SIZE = False
 ButMass = []
+
 def Module (x1, y1, x2, y2):
     return sqrt((x1 - x2)**2 + (y1 - y2)**2)
 
+
 def Module1 (a, b):
     return sqrt((a)**2 + (b)**2)
+
 
 def angle (x1, y1, x2, y2):
     if x1 - x2 != 0 :
@@ -48,6 +52,7 @@ def angle (x1, y1, x2, y2):
     if x1 < x2 and y1 > y2:
         return f
 
+    
 def Force (m1, m2, x1, y1, x2, y2, var):
     angle1 = angle(x1, y1, x2, y2)
     F = ((G * m1 * m2) / (Module(x1, y1, x2, y2))**2)
@@ -60,17 +65,22 @@ def Force (m1, m2, x1, y1, x2, y2, var):
     if var == 2:
         return Fy
 
+    
 def CoordinateX (x0, Vx, t):
     return Vx * t + x0
  
+    
 def CoordinateY (y0, Vy, t):
     return Vy * t + y0
  
+    
 def VelocityX (Ax, Vx, t):
     return Ax * t + Vx
 
+
 def VelocityY (Ay, Vy, t):
     return Ay * t + Vy
+
 
 def Acceleration (F, Fx, Fy, m, var):
     if var == 0:
@@ -80,16 +90,20 @@ def Acceleration (F, Fx, Fy, m, var):
     if var == 2:
         return Fy / m
 
+    
 def AccelerationC (V, R):
     return (V ** 2) / R
+
 
 def OrbVel(m, x1, y1, x2, y2):
     global G
     h = Module(x1, y1, x2, y2)
     return sqrt(G * (m / h))
 
+
 def EscVel(m, x1, y1, x2, y2):
     return sqrt(2) * OrbVel(m, x1, y1, x2, y2)
+
 
 def Collision(m1, m2, Vx1, Vy1, Vx2, Vy2, var):
     Vx = (Vx1 * m1 + Vx2 * m2) / (m1 + m2)
@@ -102,10 +116,12 @@ def Collision(m1, m2, Vx1, Vy1, Vx2, Vy2, var):
     if var == 2: 
         return Vy
 
+    
 def Shift (A, n):
     d = deque(A[n])
     d.rotate(1)
     return d
+
 
 def ShiftPoint (A, n, dc, TrDepth, k):
     for M1 in range (k):
@@ -115,6 +131,7 @@ def ShiftPoint (A, n, dc, TrDepth, k):
             else:
                 Trajectory[M1][M2] =(Trajectory[M1][M2] [0] , Trajectory[M1][M2][1]  + dc)
     return A
+
 
 def RestoreMyUniverse (k , TrDepth, MainArray):
     for j in range (k):
@@ -131,6 +148,7 @@ def DrawVec (p):
     pygame.draw.aaline(sc, DrawOrbVel(p, x2[p] - x1[p], y2[p] - y1[p]), [x2[p], y2[p]], [x2[p]  - 10 * cos(angle(x1[p], y1[p], x2[p], y2[p]) + pi / 8) , y2[p] - 10 *sin(angle(x1[p], y1[p], x2[p], y2[p]) + pi / 8)])
     pygame.display.update()
 
+    
 def DrawMyUniverse (p):
     pygame.draw.aaline(sc, (255, 255, 255), [x1[p], y1[p]], [x2[p], y2[p]])
     pygame.draw.aaline(sc, (255, 255, 255), [x2[p], y2[p]], [x2[p]  - 10 * cos(angle(x1[p], y1[p], x2[p], y2[p]) - pi / 8) , y2[p] - 10 *sin(angle(x1[p], y1[p], x2[p], y2[p]) - pi / 8)])
@@ -138,13 +156,11 @@ def DrawMyUniverse (p):
     pygame.draw.circle(sc, MainArray[p].color, [x1[p], y1[p]], MainArray[p].r)
     pygame.display.update()
 
+    
 def g (m, h):
     global G
     return (G * m) / h
 
-def RotTheCoorSys (x0, y0, x1, y1, x2, y2):
-    alpha = angle(x1, y1, x2, y2)
-    return (x0 * cos(alpha) + y0 * sin(alpha), - x0 * sin(alpha) + y0 * cos(alpha))
 
 def DrawOrbVel (p, Vx, Vy):
     global  x1, x2, y1, y2
@@ -162,6 +178,7 @@ def DrawOrbVel (p, Vx, Vy):
     else:
         return (255, 255, 255)
 
+    
 def ColorForInf (r, i):
     global k
     if r == k:
@@ -170,9 +187,11 @@ def ColorForInf (r, i):
         return (0, 0, 255)    
     return (255, 255, 255)
 
+
 def But1 (event):
     first_block.EntTheNum()
 
+    
 class Planet:
     x0 = 0
     y0 = 0
@@ -219,6 +238,7 @@ class Planet:
     def OVel(self, x, y):
         self.OrbVel = OrbVel(self.m, self.x0, self.y0, x, y)
 
+        
 class Block:
     p = 0
     cond = 0
@@ -246,13 +266,14 @@ class Block:
         self.cond += 1
     def Mass(self):
         if self.cond == 0:
-            self.lab = Label(text = 'Введите количество объектов', font = ("Comic Sans MS", 10, "bold"))
+            self.lab = Label(text = 'Г‚ГўГҐГ¤ГЁГІГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г®ГЎГєГҐГЄГІГ®Гў', font = ("Comic Sans MS", 10, "bold"))
         else:
-            self.lab= Label(text = 'Введите массу ' + str(self.p + 1) + ' объекта', font = ("Comic Sans MS", 10, "bold"))
+            self.lab= Label(text = 'Г‚ГўГҐГ¤ГЁГІГҐ Г¬Г Г±Г±Гі ' + str(self.p + 1) + ' Г®ГЎГєГҐГЄГІГ ', font = ("Comic Sans MS", 10, "bold"))
         self.lab.pack()
         
+        
 root = Tk()
-lab = Label(text = 'Введите количество объектов', font = ("Comic Sans MS", 10, "bold"))
+lab = Label(text = 'Г‚ГўГҐГ¤ГЁГІГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г®ГЎГєГҐГЄГІГ®Гў', font = ("Comic Sans MS", 10, "bold"))
 lab.pack()
 first_block = Block(root)
 root.bind('<Return>', But1)
@@ -282,11 +303,6 @@ for i in range (k):
     MainArray.append(0)
 for i in range (k):
     MainArray[i] = Planet()
-
-MainArray[0].m = 9*10**15
-MainArray[1].m = 9*10**9
-MainArray[2].m = 9*10**8
-MainArray[3].m = 9*10**4
 
 x1 = [-10000]  * k
 y1 = [-10000]  * k
